@@ -36,12 +36,13 @@ N(Print_book);
 N(Green_book);
 N(defoff_book);
 
-N(beginning) { P, ((n_t)o[b])(b, a, t, o, s); }
 void showit() {}
 void op() {}
 void parse_name() {}
 void parse_new_line() {}
 void parse_char() {}
+void parse_b() {}
+void parse_a() {}
 void parse_dot() {}
 void parse_space() {}
 
@@ -49,13 +50,19 @@ void parse_space() {}
 // clang-format off
 long ram[0x10000];
 int main() {
-  long b = Maroon, a = Red + 1, t = a, *o = ram + 0x5000, s = a;
+  long *o = ram + 0x5000, b = 0, a = 0, t = 1, s = 0, r[8] = {o[s++] = 0};
 
 
 
 
 #define os o[s++] = 
-#define beginning   o[s++] = 1,
+#define next        o[s++] = 8, o[s++] = o[r[Blue]+1]
+#define beginning   o[s + 0] = 1,           \
+                    o[s + 1] = r[Blue   ],  \
+                    o[s + 2] = r[Green  ],  \
+                    o[s + 3] = r[Yellow ],  \
+                    o[s + 4] = r[Red    ],  \
+                    r[Blue ] = s, s += 5,
 #define tword(name) o[s++] = 2, o[s++] = name,
 #define nl          o[s++] = 3
 #define dword(name) o[s++] = 4, o[s++] = name,
@@ -98,13 +105,20 @@ int main() {
   dword("sentence_member") nl;
   cword(parse_name) dot nl;
   cword(parse_char) dot nl;
-  os 0;
+  next;
 
-  o[Blue] = s,
-  printf("%ld\n", o[Blue]);
+t = s;
+  beginning tword("S") nl;
+  dword("S") nl;
+  cword(parse_b) dot nl;
+  tword("S") cword(parse_a) dot nl;
+  next;
 
-  defoff_book(b, a, t, o, s);
-  //Print_book(b, a, t, o, s);
+
+  printf("%ld\n", r[Blue]);
+  //defoff_book(b, a, t, o, s);
+  
+  Print_book(o, b, a, t, s, r);
   //Green_book(b, a, t, o, s);
 }
 
