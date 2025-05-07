@@ -114,10 +114,11 @@ int main() {
   next;
 
 
-  printf("%ld\n", r[Blue]);
-  //defoff_book(b, a, t, o, s);
+  defoff_book(o, b, a, r[Blue], s, r);
   
+  printf("\n");
+  printf("\n");
   Print_book(o, b, a, r[Blue], s, r);
-  //Green_book(b, a, t, o, s);
+  //Green_book(o, b, a, r[Blue], s, r);
 }
 
