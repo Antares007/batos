@@ -32,9 +32,10 @@ most_abstract_definition
 
 */
 #include "common.h"
+N(ob);
 N(Print_book);
-N(Green_book);
-N(defoff_book);
+extern N((*Print_nars[]));
+extern N((*defoff_nars[]));
 
 void showit() {}
 void op() {}
@@ -114,11 +115,13 @@ int main() {
   next;
 
 
-  defoff_book(o, b, a, r[Blue], s, r);
+  //defoff_book(o, b, a, r[Blue], s, r);
   
   printf("\n");
   printf("\n");
-  Print_book(o, b, a, r[Blue], s, r);
-  //Green_book(o, b, a, r[Blue], s, r);
+  o[--b] = Print_nars;
+  o[--b] = defoff_nars;
+  ob(o, b, a, r[Blue], s, r);
+
 }
 
