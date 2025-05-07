@@ -50,7 +50,7 @@ void parse_space() {}
 // clang-format off
 long ram[0x10000];
 int main() {
-  long *o = ram + 0x5000, b = 0, a = 0, t = 1, s = 0, r[8] = {o[s++] = 0};
+  long *o = ram + 0x5000, b = 0, a = 0, s = 0, r[8] = {o[s++] = 0};
 
 
 
@@ -107,7 +107,6 @@ int main() {
   cword(parse_char) dot nl;
   next;
 
-t = s;
   beginning tword("S") nl;
   dword("S") nl;
   cword(parse_b) dot nl;
@@ -118,7 +117,7 @@ t = s;
   printf("%ld\n", r[Blue]);
   //defoff_book(b, a, t, o, s);
   
-  Print_book(o, b, a, t, s, r);
+  Print_book(o, b, a, r[Blue], s, r);
   //Green_book(b, a, t, o, s);
 }
 
