@@ -32,10 +32,10 @@ most_abstract_definition
 
 */
 #include "common.h"
-N(ob);
-N(Print_book);
-extern N((*Print_nars[]));
-extern N((*defoff_nars[]));
+
+N(bo);
+N(book_of_print);
+N(defoff_0);
 
 void showit() {}
 void op() {}
@@ -49,12 +49,9 @@ void parse_space() {}
 
 #pragma GCC diagnostic ignored "-Wint-conversion"
 // clang-format off
-long ram[0x10000];
+long ram[0x12000];
 int main() {
-  long *o = ram + 0x5000, b = 0, a = 0, s = 0, r[8] = {o[s++] = 0};
-
-
-
+  long *o = ram + 0x5000, b = 0, a = 0, s = 0x2000, r[8] = {o[s++] = 0};
 
 #define os o[s++] = 
 #define next        o[s++] = 8, o[s++] = o[r[Blue]+1]
@@ -113,15 +110,12 @@ int main() {
   cword(parse_b) dot nl;
   tword("S") cword(parse_a) dot nl;
   next;
-
-
-  //defoff_book(o, b, a, r[Blue], s, r);
   
   printf("\n");
   printf("\n");
-  o[--b] = Print_nars;
-  o[--b] = defoff_nars;
-  ob(o, b, a, r[Blue], s, r);
+  o[--b] = book_of_print;
+  o[--b] = defoff_0;
 
+  long t = r[Blue];
+  bo(Args);
 }
-
