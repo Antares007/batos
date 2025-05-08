@@ -12,7 +12,6 @@ LDFLAGS := -Wl,-T$(BOOKLD),-Map=$(OBJ_DIR)/book.map
 # === AUTOMATIC SOURCES & OBJECTS ===
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
-BOOKS:= $(patsubst $(SRC_DIR)/%.c,%.c,$(SRCS))
 DEPS := $(OBJS:.o=.d)
 
 # === DEFAULT RULE ===
@@ -24,7 +23,7 @@ $(TARGET): $(OBJS) | $(BIN_DIR) $(BOOKLD)
 
 $(BOOKLD):
 	ld --verbose | sed -n '/^=========/,/^=========/{//!p}' > $(OBJ_DIR)/default.ld
-	python patch_default_ld.py $(OBJ_DIR)/default.ld $(OBJ_DIR)/book.ld 256 $(ChapterSize) $(BOOKS)
+	python patch_default_ld.py $(OBJ_DIR)/default.ld $(OBJ_DIR)/book.ld $(ChapterSize)
 
 # === COMPILATION ===
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
