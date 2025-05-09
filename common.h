@@ -15,7 +15,7 @@ typedef enum { Maroon, Olive, Lime, Navy, Blue, Green, Yellow, Red } Colors;
 #define P 0
 #endif
 
-#define S(argo) __attribute__((noinline)) __attribute__((used)) static N(argo)
+#define S(argo) __attribute__((noinline)) static N(argo)
 
 #define Chapter(N) __attribute__((section("." __FILE_NAME__ #N)))
 #define D(argo)                                                                \
@@ -28,6 +28,4 @@ typedef enum { Maroon, Olive, Lime, Navy, Blue, Green, Yellow, Red } Colors;
 #define ChapterSize 48
 #endif
 
-N(Not);
-N(And);
-N(Or);
+N(bo);

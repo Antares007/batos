@@ -1,7 +1,7 @@
 # === CONFIGURATION ===
 ChapterSize := 16
 CC      := clang
-CFLAGS  := -Wall -Wextra -Wno-unused-parameter -std=c99 -Iinclude -MMD -MP -DChapterSize=$(ChapterSize) -O3
+CFLAGS  := -Wall -Wextra -std=c99 -Iinclude -MMD -MP -DChapterSize=$(ChapterSize) -O3
 SRC_DIR := .
 OBJ_DIR := build
 BIN_DIR := bin

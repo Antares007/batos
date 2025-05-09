@@ -1,29 +1,25 @@
 #include "common.h"
 
-N(bo) {
-  n_t chapter = (((n_t)o[b]) + ChapterSize * (long)o[t]);
-  t++;
-  chapter(Args);
-}
-
+#include "bo_id.h"
 #include <stdio.h>
 // clang-format off
-S(Zero  ) { printf("zero\n");                                 } 
-S(One   ) { printf("{1} ");                 t += 4; bo(Args); } 
-S(Two   ) { printf("%s ", (char *)o[t++]),          bo(Args); } 
-S(Three ) { printf("\n"),                           bo(Args); } 
-S(Four  ) { printf("%s ", (char *)o[t++]),          bo(Args); } 
-S(Five  ) { printf("."),                            bo(Args); } 
-S(Six   ) { printf("{6} "), t++,                    bo(Args); } 
-S(Seven ) { printf(" "),                            bo(Args); } 
-S(Eight ) { printf("...\n"), t = o[t],              bo(Args); } 
+S(Zero  ) { printf("zero\n");                     id_0(Args); } 
+S(One   ) { printf("{1} ");                       id_1(Args); } 
+S(Two   ) { printf("%s ", (char *)o[t]),          id_2(Args); } 
+S(Three ) { printf("\n"),                         id_3(Args); } 
+S(Four  ) { printf("%s ", (char *)o[t]),          id_4(Args); } 
+S(Five  ) { printf("."),                          id_5(Args); } 
+S(Six   ) { printf("{6} "),                       id_6(Args); } 
+S(Seven ) { printf(" "),                          id_7(Args); } 
+S(Eight ) { printf("...\n"), t = o[t],            id_8(Args); } 
 
-Chapter(0)N(book_of_print) { Zero  (Args); }
-Chapter(1)S(one          ) { One   (Args); }
-Chapter(2)S(two          ) { Two   (Args); }
-Chapter(3)S(three        ) { Three (Args); }
-Chapter(4)S(four         ) { Four  (Args); }
-Chapter(5)S(five         ) { Five  (Args); }
-Chapter(6)S(six          ) { Six   (Args); }
-Chapter(7)S(seven        ) { Seven (Args); }
-Chapter(8)S(eight        ) { Eight (Args); }
+#define C(I) Chapter(I) N(book_of_print_##I)
+C(0) { Zero  (Args); }
+C(1) { One   (Args); }
+C(2) { Two   (Args); }
+C(3) { Three (Args); }
+C(4) { Four  (Args); }
+C(5) { Five  (Args); }
+C(6) { Six   (Args); }
+C(7) { Seven (Args); }
+C(8) { Eight (Args); }

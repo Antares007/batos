@@ -34,7 +34,7 @@ most_abstract_definition
 #include "common.h"
 
 N(bo);
-N(book_of_print);
+N(book_of_print_0);
 N(defoff_0);
 
 void showit() {}
@@ -46,11 +46,11 @@ void parse_b() {}
 void parse_a() {}
 void parse_dot() {}
 void parse_space() {}
-
+void the_end() { P; }
 #pragma GCC diagnostic ignored "-Wint-conversion"
 // clang-format off
 long ram[0x12000];
-int main() {
+void sophis3() {
   long *o = ram + 0x5000, b = 0, a = 0, s = 0x2000, r[8] = {o[s++] = 0};
 
 #define os o[s++] = 
@@ -113,7 +113,8 @@ int main() {
   
   printf("\n");
   printf("\n");
-  o[--b] = book_of_print;
+  o[--b] = the_end;
+  o[--b] = book_of_print_0;
   o[--b] = defoff_0;
 
   long t = r[Blue];

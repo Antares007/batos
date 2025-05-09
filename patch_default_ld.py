@@ -10,13 +10,13 @@ def extract_max_chapter_counts() -> list[tuple[str, int]]:
     results = []
     for path in Path(".").glob("*.c"):
         content = path.read_text()
-        matches = re.findall(r'Chapter\((\d+)\)', content)
+        matches = re.findall(r'C\((\d+)\)', content)
         chapter_numbers = [int(num) for num in matches]
         if chapter_numbers:
             max_chapter = max(chapter_numbers) + 1  # +1 to include the max chapter itself
             book_name = path.stem  # Use stem (filename without extension) for section names
             results.append((book_name, max_chapter))
-    return results
+    return sorted(results)
 
 def inject_func_sections(default_ld_path: str, output_ld_path: str,
                          max_func_size: int = 256,
@@ -35,10 +35,10 @@ def inject_func_sections(default_ld_path: str, output_ld_path: str,
         if not inserted and "*(SORT(.text.sorted.*))" in line:
             new_lines.append("  /* === BEGIN Chapters === */\n")
             for book, chapter_count in chapter_layout:
-                new_lines.append("  chapter_index = .;\n")
+                new_lines.append(f"  chapters_index_base = .;\n")
                 for i in range(chapter_count):
                     new_lines.append(f"  KEEP(*(.{book}.c{i}))\n")
-                    new_lines.append(f"  . = chapter_index + {max_func_size * (i + 1)};\n")
+                    new_lines.append(f"  . = chapters_index_base + {max_func_size * (i + 1)};\n")
             new_lines.append("  /* === END Chapters === */\n")
             inserted = True
     if not inserted:
