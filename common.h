@@ -25,7 +25,7 @@ typedef enum { Maroon, Olive, Lime, Navy, Blue, Green, Yellow, Red } Colors;
   S(argo##_ex)
 
 #ifndef ChapterSize
-#define ChapterSize 48
+#define ChapterSize 16
 #endif
 
 N(bo);

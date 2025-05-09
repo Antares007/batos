@@ -54,7 +54,7 @@ void sophis3() {
   long *o = ram + 0x5000, b = 0, a = 0, s = 0x2000, r[8] = {o[s++] = 0};
 
 #define os o[s++] = 
-#define next        o[s++] = 8, o[s++] = o[r[Blue]+1]
+#define next        o[s++] = 8, o[s++] = Blue
 #define beginning   o[s + 0] = 1,           \
                     o[s + 1] = r[Blue   ],  \
                     o[s + 2] = r[Green  ],  \
@@ -114,8 +114,8 @@ void sophis3() {
   printf("\n");
   printf("\n");
   o[--b] = the_end;
-//  o[--b] = book_of_print_0;
-  o[--b] = defoff_0;
+  o[--b] = book_of_print_0;
+//  o[--b] = defoff_0;
 
   long t = r[Blue];
   bo(Args);
