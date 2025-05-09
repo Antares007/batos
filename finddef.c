@@ -14,9 +14,9 @@ S(match) {
 #include "bo_id.h"
 C(0) { id_0(Args); }
 C(1) { id_1(Args); }
-C(2) { match(Args); }
+C(2) { id_2(Args); }
 C(3) { id_3(Args); }
-C(4) { id_4(Args); }
+C(4) { match(Args); }
 C(5) { id_5(Args); }
 C(6) { id_6(Args); }
 C(7) { id_7(Args); }

@@ -114,7 +114,7 @@ void sophis3() {
   printf("\n");
   printf("\n");
   o[--b] = the_end;
-  o[--b] = book_of_print_0;
+//  o[--b] = book_of_print_0;
   o[--b] = defoff_0;
 
   long t = r[Blue];
