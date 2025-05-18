@@ -2,6 +2,13 @@
 #include "common.h"
 #include <stdio.h>
 
+#define _STR(s) #s
+#define STR(s) _STR(s)
+#define Chapter                                                                \
+  __attribute__((section("." __FILE_NAME__ STR(__LINE__))))                    \
+  __attribute__((__noinline__))
+#define ChapterSize 512
+
 __attribute__((noinline)) N(bo) {
   n_t chapter = (((n_t)o[b]) + ChapterSize * (long)o[t]);
   t++;

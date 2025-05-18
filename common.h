@@ -17,18 +17,4 @@ typedef enum { Maroon, Olive, Lime, Navy, Blue, Green, Yellow, Red } Colors;
 
 #define S(argo) __attribute__((noinline)) static N(argo)
 
-#define _STR(s) #s
-#define STR(s) _STR(s)
-
-#define Chapter                                                                \
-  __attribute__((section("." __FILE_NAME__ STR(__LINE__))))                    \
-  __attribute__((noinline))
-
-#ifndef ChapterSize
-#define ChapterSize 16
-#endif
-#ifndef NMAP
-#define NMAP "this is set by Makefile"
-#endif
-
 N(bo);
