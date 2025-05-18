@@ -1,12 +1,7 @@
 // clang-format off
 #pragma GCC diagnostic ignored "-Wint-conversion"
 
-#define _STR(s) #s
-#define STR(s) _STR(s)
-
-#define Chapter                                                                \
-  __attribute__((section("." __FILE_NAME__ STR(__LINE__))))                    \
-  __attribute__((__noinline__))
+#include "book.h"
 #define ChapterSize 256
 
 // #define P (void)0 // printf("%s\n", __func__)
