@@ -10,14 +10,14 @@ if __name__ == "__main__":
         output = []
         content = file.read()
         lines = content.splitlines(keepends=True)
-        indices = [i + 1 for i, line in enumerate(lines) if line.startswith("Chapter ")]
+        indices = [i + 1 for i, line in enumerate(lines) if "Chapter " in line]
         if len(indices):
             match = re.search(r'#define\s+ChapterSize\s+(\d+)', content)
             chapterSize = int(match.group(1))
             if match:
                 output.append(f"  chapters_index_base = .;\n")
                 for i, __LINE__ in enumerate(indices):
-                    output.append(f"  KEEP(*(.{input_c}{__LINE__}))\n")
+                    output.append(f"  KEEP(*(.text.{input_c}{__LINE__}))\n")
                     output.append(f"  . = chapters_index_base + {chapterSize * (i + 1)};\n")
             else:
                 print(f"error: #define ChapterSize (int)n", file=sys.stderr)

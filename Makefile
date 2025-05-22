@@ -27,11 +27,11 @@ $(DEFAULTLD): | $(OBJ_DIR)
 	ld --verbose | sed -n '/^=========/,/^=========/{//!p}' > $(DEFAULTLD)
 
 $(BOOKLD): patch_default_ld.py $(DEFAULTLD) $(BOOKS)
-	python patch_default_ld.py $(DEFAULTLD) $(BOOKLD) $(BOOKS) 
+	@python patch_default_ld.py $(DEFAULTLD) $(BOOKLD) $(BOOKS) 
 
 # === COMPILATION ===
 $(OBJ_DIR)/%.b: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	python chapter.py $< $@
+	@python chapter.py $< $@
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
