@@ -1,7 +1,12 @@
 // clang-format off
 #pragma GCC diagnostic ignored "-Wint-conversion"
 
-#include "book.h"
+#define _STR(s) #s
+#define STR(s) _STR(s)
+
+#define Chapter                                                                \
+  __attribute__((section(".text." __FILE_NAME__ STR(__LINE__))))               \
+  __attribute__((__noinline__)) __attribute__((used))
 #define ChapterSize 512
 
 #include <stdio.h>
@@ -89,19 +94,19 @@ Chapter S(Red_3   ) { int rez = tword->clr(C, u);
 
 
 static long ram[2048];
-N(ret) { return 0; }
+S(ret) { return 0; }
 #include <assert.h>
-N(ok      ) { return bo(Green_0, o, t+2, tword, s, u); }
+S(ok      ) { return bo(Green_0, o, t+2, tword, s, u); }
 
-N(term_t  ) { return ok(C, (long[]){"t", u}); }
-N(term_a  ) { return ok(C, (long[]){"a", u}); }
-N(term_b  ) { return ok(C, (long[]){"b", u}); }
-N(term_o  ) { return ok(C, (long[]){"o", u}); }
-N(term_s  ) { return ok(C, (long[]){"s", u}); }
-N(term_1  ) { return ok(C, (long[]){"1", u}); }
-N(term_2  ) { return ok(C, (long[]){"2", u}); }
-N(term_3  ) { return ok(C, (long[]){"3", u}); }
-N(term_nl ) {
+S(term_t  ) { return ok(C, (long[]){"t", u}); }
+S(term_a  ) { return ok(C, (long[]){"a", u}); }
+S(term_b  ) { return ok(C, (long[]){"b", u}); }
+S(term_o  ) { return ok(C, (long[]){"o", u}); }
+S(term_s  ) { return ok(C, (long[]){"s", u}); }
+S(term_1  ) { return ok(C, (long[]){"1", u}); }
+S(term_2  ) { return ok(C, (long[]){"2", u}); }
+S(term_3  ) { return ok(C, (long[]){"3", u}); }
+S(term_nl ) {
   const char*strs[100];
   int len = 0;
   void**l = (void*)u;
@@ -123,7 +128,7 @@ int main() {
 #define B(b) o[s++] = 2, o[s++] = term_##b
 #define T(S) o[s++] = 3, o[s++] = S
 
-  D('_'), T('s'), B(nl);
+  D('_'), T('3'), B(nl);
   D('3'), T('T'), T('T'), T('T');
   D('T'), B(t);
   D('T'), B(a);
@@ -139,18 +144,15 @@ int main() {
   D('S'), T('S'), B(t), T('O');
   D('O');
   D('O'), B(o);
-  //D('D');
-  //D('D'), B('d');
-  //
+
   D('A'), B(b);
   D('A'), T('B'), B(a);
   D('B'), B(t);
   D('B'), T('A'), B(o);
-  //
-  //D('2'), T('T'), T('T');
-  //D('1'), T('T');
+
   o[s++] = 0;
   o[s++] = 0;
+
   Tword tword = {
     .upper = 0,
     .t = 0,
@@ -161,3 +163,29 @@ int main() {
   };
   bo(Blue_0, o, 0, (&tword), s, u);
 }
+/*
+primary_expression:
+  constant
+  (expression)
+
+unary-expression:
+  primary-expression
+  unary_operator unary_expression
+unary_operator: one of
+  & * + - ~ !
+
+
+multiplicative_expression:
+  unary_expression
+  multiplicative_expression * unary_expression
+  multiplicative_expression / unary_expression
+  multiplicative_expression % unary_expression
+
+additive_expression:
+  multiplicative_expression
+  additive_expression + multiplicative_expression
+  additive_expression - multiplicative_expression
+
+expression:
+  additive_expression
+            */
