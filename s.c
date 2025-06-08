@@ -11,7 +11,7 @@ S(term_nl) {
   static char toTermColor[] = {4, 2, 3, 1};
 
   for (long i = 0; i < d; i++)
-    printf("\033[30;4%dm%c\033[0m", toTermColor[color[i]], str[i]);
+    printf("\033[30;4%dm%c\033[0m", toTermColor[(int)color[i]], str[i]);
   printf("\n");
   return ok(C, d);
 }
@@ -20,12 +20,13 @@ S(term_nl) {
   S(term_##n) {                                                                \
     return (Length == d ? 0 : (str[d] = #n[0], color[d] = b, ok(C, d + 1)));   \
   }
-Term(t) Term(a) Term(b) Term(o) Term(1) Term(2) Term(3);
 
-// book oriented programming
-// book operator?
+Term(t) Term(a) Term(b) Term(o) Term(1) Term(2) Term(3) Term(s)
 
-long calculator(long arg_grammar, long *o, long s);
+    // book oriented programming
+    // book operator?
+
+    long calculator(long arg_grammar, long *o, long s);
 #include <stdio.h>
 int main() {
   long o[2048];
@@ -36,8 +37,9 @@ int main() {
 
   D('_'), T('A'), B(nl);
   D('_'), B(nl);
-  D('_'), T('S'), B(nl);
+  D('_'), T('B'), B(nl);
   D('_'), B(nl);
+  D('_'), T('A'), T('B'), B(nl);
 
   D('T'), B(t);
   D('N'), B(1);
@@ -48,10 +50,11 @@ int main() {
   D('T'), B(b);
 
   D('S'), B(b);
-  D('S'), T('S'), B(a);
-  D('S'), T('S'), B(t), T('O');
-  D('O');
-  D('O'), B(o);
+  D('S'), T('S'), T('R'), B(s);
+
+  //  D('R'), B(a), T('R'), T('R');
+  D('R');
+  D('R'), B(b), T('R'), T('R');
 
   D('A'), B(a);
   D('A'), T('B'), B(o);
@@ -61,6 +64,6 @@ int main() {
   o[s++] = 0;
   o[s++] = 0;
 
-  grow_toti_with_Yellow_pith(Pink, o, 0, 0, s, 0);
+  branch_and_grow_Yellow(Pink, o, 0, 0, s, 0);
   return 0;
 }
