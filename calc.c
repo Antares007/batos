@@ -14,7 +14,6 @@ enum {
   additive_expression,
   constant,
 };
-
 #define Length 10
 static char str[1024];
 extern int printf(const char *restrict __format, ...);
@@ -23,29 +22,47 @@ extern int printf(const char *restrict __format, ...);
 #define List(h,t) (long[]){h, (long*)t}
 #define Head(l) l[0]
 #define Tail(l) ((long*)l[1])
-S(term         ) { return (Length == d ? 0 : (str[d] = o[t + 2], ok(C, d + 1, r))); }
+S(term         ) { return (Length == d ? 0 : (str[d] = ((char*)o[t + 2])[1], ok(C, d + 1, r))); }
 
-S(b_nl         ) { return (str[d] = '\0', printf("%3ld = %s\n", r[0], str), ok(C, d, r)); }
-S(b_do_1       ) { return           ok(C, d, List(1, r)); }
-S(b_do_2       ) { return           ok(C, d, List(2, r)); }
-S(b_do_3       ) { return           ok(C, d, List(3, r)); }
-S(b_do_negate  ) { return           ok(C, d, List(-Head(r), Tail(r))); }
-S(b_do_bang    ) { return           ok(C, d, List(!Head(r), Tail(r))); }
-S(b_do_mul     ) { return           ok(C, d, List(Head(Tail(r)) * Head(r), Tail(Tail(r)))); }
-S(b_do_div     ) { return Head(r) ? ok(C, d, List(Head(Tail(r)) / Head(r), Tail(Tail(r)))) : 0; }
-S(b_do_plus    ) { return           ok(C, d, List(Head(Tail(r)) + Head(r), Tail(Tail(r)))); }
-S(b_do_minus   ) { return           ok(C, d, List(Head(Tail(r)) - Head(r), Tail(Tail(r)))); }
+S(nl         ) { return (str[d] = '\0', printf("%3ld = %s\n", r[0], str), ok(C, d, r)); }
+S(is_80      ) { return r[0] == 80 ? ok(CE) : 0; }
+S(do_1       ) { return           ok(C, d, List(1, r)); }
+S(do_2       ) { return           ok(C, d, List(2, r)); }
+S(do_3       ) { return           ok(C, d, List(3, r)); }
+S(do_negate  ) { return           ok(C, d, List(-Head(r), Tail(r))); }
+S(do_bang    ) { return           ok(C, d, List(!Head(r), Tail(r))); }
+S(do_mul     ) { return           ok(C, d, List(Head(Tail(r)) * Head(r), Tail(Tail(r)))); }
+S(do_div     ) { return Head(r) ? ok(C, d, List(Head(Tail(r)) / Head(r), Tail(Tail(r)))) : 0; }
+S(do_plus    ) { return           ok(C, d, List(Head(Tail(r)) + Head(r), Tail(Tail(r)))); }
+S(do_minus   ) { return           ok(C, d, List(Head(Tail(r)) - Head(r), Tail(Tail(r)))); }
+
+S(book_of_print);
+S(print_0) { return printf("0(0)\n");}
+S(print_1) { return printf("\n%s → ", (char*)o[t+2]), book_of_print(b, o, t + W, u, s, E); }
+S(print_2) { return printf("%s ", (char*)o[t+2]), book_of_print(b, o, t + W, u, s, E); }
+S(print_3) { return printf("%s ", (char*)o[t+2]), book_of_print(b, o, t + W, u, s, E);}
+
+S(book_of_print) {
+  static n_t nars[] = {
+    print_0,
+    print_1,
+    print_2,
+    print_3,
+  };
+  return nars[o[t]](CE);
+}
 int main() {
   long o[2048];
   long s = 0;
 
-#define D(S) o[s++] = 1, o[s++] = S,          o[s++] = #S
-#define B(b) o[s++] = 2, o[s++] = b_##b,      o[s++] = #b
-#define T(S) o[s++] = 3, o[s++] = S,          o[s++] = #S
+#define D(S) o[s++] = 1, o[s++] = S,  o[s++] = #S
+#define B(b) o[s++] = 2, o[s++] = b,  o[s++] = #b
+#define T(S) o[s++] = 3, o[s++] = S,  o[s++] = #S
 #undef C
-#define C(b) o[s++] = 2, o[s++] = term,       o[s++] = b
+#define C(b) o[s++] = 2, o[s++] = term, o[s++] = #b
 
-  D(0),                         T(expression), B(nl);
+  D(0),                         T(expression), B(is_80), B(nl);
+
   D(constant),                  C('1'), B(do_1);
   D(constant),                  C('2'), B(do_2);
   D(constant),                  C('3'), B(do_3);
@@ -67,7 +84,7 @@ int main() {
 
   D(expression),                T(additive_expression);
   o[s++] = 0;
-
+  book_of_print(Pink, o, 0, 0, s, 0, 0);
   branch_and_grow_Yellow(Pink, o, 0, 0, s, 0, 0);
   return 0;
 }
