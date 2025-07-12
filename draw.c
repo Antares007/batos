@@ -13,40 +13,51 @@ static int semiAuto = 1;
 static int available_time = 46;
 static int show_incomplete_theorems = 1;
 
-#include <stdio.h>
-void drawTextAt(Rectangle r, int offsetX, int offsetY, int size,
-                const char *fmt, ...) {
-  char buffer[32];
-  va_list args;
-  va_start(args, fmt);
-  vsnprintf(buffer, sizeof(buffer), fmt, args);
-  va_end(args);
-  DrawTextEx(font, buffer, (Vector2){r.x + offsetX, r.y + offsetY}, size, 0,
-             BLACK);
-}
-
-#define CELL_SIZE 32
+#define CELL_SIZE 35
 #define FONT_SIZE_SMALL 10
 #define FONT_SIZE_LARGE 20
 #define TEXT_OFFSET_X 5
 #define TEXT_OFFSET_Y 20
+#include <stdio.h>
+#include <stdlib.h>
 void drawCell(int x, int y, long *o, long t, Color c) {
   Rectangle rect = {x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE};
-  if (o[t] == 1)
-
-    DrawRectangle(rect.x, rect.y, 20, rect.height, c),
-        DrawTriangle(
-            (Vector2){rect.x + rect.width, rect.y + rect.height / 2.0f},
-            (Vector2){rect.x + 20, rect.y},
-            (Vector2){rect.x + 20, rect.y + rect.height}, c);
-  else if (o[t] == 3)
-    DrawRectangle(rect.x, rect.y, rect.width, 10, c),
-        DrawRectangle(rect.x + 10, rect.y, 10, rect.height, c);
+  DrawRectangleRec(rect, GRAY);
+  if (o[t] == 0)
+    DrawRectangleRec(rect, c),
+        DrawTextEx(font, TextFormat("%c", o[t + 1]),
+                   (Vector2){rect.x + 2.f * CELL_SIZE / 5.f,
+                             rect.y + 1.2f * CELL_SIZE / 5.f},
+                   CELL_SIZE / 2.f, 0, BLACK);
+  else if (o[t] == 1)
+    DrawRectangle(rect.x + 2 * CELL_SIZE / 5.f, rect.y + 2 * CELL_SIZE / 5.f,
+                  3 * CELL_SIZE / 5.f, CELL_SIZE / 5.f, c),
+        DrawRectangle(rect.x + 2.f * CELL_SIZE / 5.f, rect.y, CELL_SIZE / 5.f,
+                      CELL_SIZE, c),
+        DrawTextEx(font, TextFormat("%c", o[t + 1]),
+                   (Vector2){rect.x + 0.8f * CELL_SIZE / 5.f,
+                             rect.y + 1.2f * CELL_SIZE / 5.f},
+                   CELL_SIZE / 2.f, 0, BLACK);
   else if (o[t] == 2)
-    DrawRectangleLinesEx(rect, 10, c);
-  drawTextAt(rect, TEXT_OFFSET_X, 0, FONT_SIZE_SMALL, "%ld", o[t]);
-  drawTextAt(rect, TEXT_OFFSET_X, TEXT_OFFSET_Y, FONT_SIZE_SMALL, "%ld", t);
-  drawTextAt(rect, TEXT_OFFSET_X + 7, 5, FONT_SIZE_LARGE, "%c", o[t + 1]);
+    DrawRectangle(rect.x, rect.y + 2 * CELL_SIZE / 5.f, CELL_SIZE,
+                  CELL_SIZE / 5.f, c),
+        DrawTextEx(font, TextFormat("%c", o[t + 1]),
+                   (Vector2){rect.x + 2 * CELL_SIZE / 5.f, rect.y},
+                   CELL_SIZE / 2.f, 0, BLACK);
+  else if (o[t] == 3)
+    DrawRectangle(rect.x, rect.y + 2 * CELL_SIZE / 5.f, CELL_SIZE,
+                  CELL_SIZE / 5.f, c),
+        DrawRectangle(rect.x + 2 * CELL_SIZE / 5.f,
+                      rect.y + 3 * CELL_SIZE / 5.f, CELL_SIZE / 5.f,
+                      2 * CELL_SIZE / 5.f, c),
+        DrawTextEx(font, TextFormat("%c", o[t + 1]),
+                   (Vector2){rect.x + 2 * CELL_SIZE / 5.f, rect.y},
+                   CELL_SIZE / 2.f, 0, BLACK);
+  else
+    printf("wtf!\n"), exit(1);
+  rect.width++;
+  rect.height++;
+  DrawRectangleLinesEx(rect, 1, BLACK);
 }
 void drawCircle(int x, int y, long *o, long t, Color c) {
   int r = CELL_SIZE / 2;
@@ -96,7 +107,7 @@ N(debug_draw) {
       BeginMode2D(camera);
 
       for (long t = 0, x = 0, y = 0; t < s; t += 2, x++)
-        drawCell(x, y, o, t, (cells[2] == t) ? colors[cells[3]] : GRAY);
+        drawCell(x, y, o, t, (cells[2] == t) ? colors[cells[3]] : LIGHTGRAY);
       for (long *c = cells; c; c = (long *)c[4])
         drawCell(c[0], c[1], o, c[2], colors[c[3]]);
 
@@ -136,7 +147,7 @@ void debug_init(void) {
   InitWindow(0, 0, "The choice machine");
   font = LoadFontEx("NovaMono-Regular.ttf", 60, 0, 0);
   camera.offset = (Vector2){CELL_SIZE, 3 * CELL_SIZE};
-  camera.zoom = 1.0f;
+  camera.zoom = 2.0f;
   camera.rotation = 0;
   camera.target = (Vector2){0};
 }
