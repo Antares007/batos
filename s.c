@@ -3,9 +3,8 @@
 #define NDEBUG
 #define TextMemberWidth 2
 #define Context                                                                \
-  long b, long *o, long t, struct Cursor *u, long s, long x, long y,           \
-      long *cells, long a
-#define C b, o, t, u, s, x, y, cells, a
+  long b, long *o, long t, struct Cursor *u, long s, long x, long y, long *cells
+#define C b, o, t, u, s, x, y, cells
 #define N(argo) void argo(Context)
 #define S(argo) static N(argo)
 
@@ -169,18 +168,21 @@ int main() {
   long s = 0;
 
 
-  D('3'), T('T'), T('T'), T('T');
-  D('T'), B('t');
-  D('T'), B('a');
-  D('T'), B('b');
+  //D('1'), T('2'), B('a');
+  //D('2'), T('3'), B('b');
+  //D('3'), T('T'), T('T'), T('T');
+  //D('T'), B('t');
+  //D('T'), B('a');
+  //D('T'), B('b');
   
-  // D('A'), B('a');
-  // D('A'), T('B'), B('o');
-  // D('B'), B('b');
-  // D('B'), T('C'), B('d');
-  // D('C'), B('c');
-  // D('C'), T('A'), B('t');
+  D('A'), B('a');
+  D('A'), T('B'), B('o');
+  D('B'), B('b');
+  D('B'), T('C'), B('t');
+  D('C'), B('c');
+  D('C'), T('A'), B('d');
 
+  //D('-'), T('S'), B('c');
   //D('S'), B('b');
   //D('S'), T('S'), B('a');
   //D('S'), T('S'), B('t'), T('O');
@@ -196,6 +198,7 @@ int main() {
   //D('3'), B('t'), B('h'), B('r'), B('e'), B('e');
   //D('3'), B('3');
 
+  //D('-'), T('R'), B('c');
   //D('R'), B('b');
   //D('R'), T('R');
 
@@ -222,6 +225,11 @@ int main() {
   o[s++] = '0';
 
   debug_init();
-  branch_and_Yellow_choice(Pink, o, 0, 0, s, 0, 0, (long[]){0, 0, 0, Pink, 0}, 1023);
+  branch_and_Yellow_choice(Pink, o, 0, 0, s, 0, 0, (long[]){0, 0, 0, Pink, 0});
   debug_close();
 }
+
+/*
+
+*/
+
