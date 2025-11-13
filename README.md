@@ -1,29 +1,10 @@
 # Choice Machine Implemented on the Call Stack
 
-This repository contains a sample implementation of the **choice machine**,
-a concept first introduced in the seminal paper
-**"On Computable Numbers, with an Application to the Entscheidungsproblem" by A. M. Turing.**
+This project is a **color-coded, tree-growing interpreter for context-free grammars**, written in C. It transforms the process of parsing and computation into a recursive, self-organizing system where each color — Pink, Yellow, Red, Green, and Blue — represents a distinct “book” or phase of interpretation, such as branching, recursion, continuation, and return. The system logs reveal a living grammar structure where each node (“book”) links to its parent and upper levels, forming a self-referential tree that evolves as rules are expanded and resolved.
 
-Turing described the choice machine (or **c-machine**) in Chapter 2, titled *Definitions*,
-as a theoretical model of computation that encounters points where multiple transitions are possible.
-While he noted that such a machine requires an external operator to resolve these ambiguous configurations,
-this implementation takes a different approach: it **systematically and deterministically explores all
-possible choices** based on the axiomatic system being executed.
+Unlike traditional parsers, this interpreter **handles both direct and indirect left recursion naturally** and **computes all grammatical choices using minimal memory**. Its recursive design grows meaning systematically rather than consuming it linearly, allowing multiple parallel derivations to coexist without duplication or backtracking. Each cycle of computation represents a complete, stable “ring” of understanding — a state of the interpreter that is both self-contained and extendable.
 
-In other words, the choice machine **internalizes choice** and **guarantees decisiveness** while executing an axiomatic system.
-
-It can serve as a **generic algorithmic engine** capable of parsing any kind or form of language grammar.
-By internalizing the choice mechanism, the parser becomes **untangled** from ambiguity and can operate as a truly **incremental parser**,
-reusing the same algorithmic structure across different contexts.
-
-This model uses the **native call stack** to represent the execution context and branching points,
-enabling **exhaustive and context-aware evaluation** of all computational paths.
-
-We may also consider implementing it on a **dedicated stack** instead of relying on the native call stack.
-This would enable us to **pause execution**, **save the entire machine state** in one step, and **resume it later**—
-allowing for incremental parsing and efficient multitasking.
-
----
+Conceptually, the project stands as a **model of grammatical computation and structural efficiency**. It unites parsing, recursion, and evaluation into a single dynamic system that mirrors organic growth: every expansion guarantees progress, every return conserves space, and every choice is explored deterministically. The result is an interpreter that behaves more like a **self-balancing tree of meaning** than a traditional stack machine — precise, recursive, and intrinsically aware of its own structure.
 
 ## 🔧 How to Compile and Run
 
